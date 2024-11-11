@@ -1,3 +1,8 @@
 # group04112024
 
-more
+## Environment setup
+-  python -m venv venv
+- .\venv\Scripts\activate
+
+## Linter
+- Ctrl - Alt - l
