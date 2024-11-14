@@ -6,3 +6,6 @@
 
 ## Linter
 - Ctrl - Alt - l
+
+## shortcuts
+- Ctrl - D
