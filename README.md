@@ -9,3 +9,5 @@
 
 ## shortcuts
 - Ctrl - D
+
+pip install pywebio
