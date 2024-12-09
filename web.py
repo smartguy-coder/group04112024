@@ -1,6 +1,6 @@
 import logging
 
-from pywebio.input import input as pw_input, slider
+from pywebio.input import input as pw_input, slider, checkbox, radio
 from pywebio.input import PASSWORD as PW_PASSWORD, NUMBER, FLOAT
 from pywebio.input import textarea
 from pywebio.output import put_text, put_error, put_success, put_warning, put_html
@@ -42,7 +42,14 @@ if is_correct_login and is_correct_password:
     # given_name = textarea(label='Enter your name', required=True, placeholder='Enter your data here', minlength=3,
     #                       maxlength=500)
 
-    given_name = pw_input(label='Enter your name', required=True).strip()
+    given_name = pw_input(label='Enter your name and surname', required=True).strip().title()
+
+    given_name_parse = given_name.split()
+    name = given_name_parse[0]
+    surname = given_name_parse[1]
+    put_success(f'yor name {name}')
+    put_success(f'yor surname {surname}')
+
 
     if given_name == LOGIN:
         put_warning('Your login is similar to your name')
@@ -65,7 +72,15 @@ if is_correct_login and is_correct_password:
     weight = pw_input(label='Enter your weight', required=True, type=NUMBER, min=25, max=150, value=50)
     weight2 = slider(label='Enter your weight in slider', required=True, type=FLOAT, min=25, max=150, value=50)
 
-    logging.debug(f'given name: {given_name}')
+    hobbies = ['tennis', 'soccer', 'chess']
+    favorite_hobbies = checkbox(label='Choose your favorite hobbies', options=hobbies)
+    put_text(favorite_hobbies)
+
+    grades = [5, 6, 9, 11, 'other']
+    user_grade = radio(label='Your grade', options=grades)
+    put_text(user_grade)
+
+    logging.debug(f'given name: {name}')
 else:
     # is_correct_login and is_correct_password:
     # True                   False
