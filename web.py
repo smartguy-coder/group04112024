@@ -1,7 +1,7 @@
 import logging
 
-from pywebio.input import input as pw_input
-from pywebio.input import PASSWORD as PW_PASSWORD
+from pywebio.input import input as pw_input, slider
+from pywebio.input import PASSWORD as PW_PASSWORD, NUMBER, FLOAT
 from pywebio.input import textarea
 from pywebio.output import put_text, put_error, put_success, put_warning, put_html
 
@@ -30,7 +30,7 @@ logging.debug(f'User entered password {password}')
 
 is_correct_login = LOGIN == login  # True or False
 logging.debug(f'User correct login: {is_correct_login}')
-is_correct_password = PASSWORD == password    # True or False
+is_correct_password = PASSWORD == password  # True or False
 # is_correct_password = True
 # is_correct_password = False
 
@@ -54,16 +54,16 @@ if is_correct_login and is_correct_password:
         put_success(f'your name contains more 50 symbols {name_length}')
     elif name_length > 20:
         put_success(f'your name contains more 20 symbols {name_length}')
+    elif 10 <= name_length <= 15:
+        #     elif name_length >= 10 and name_length <= 15    ==========>>>>>>>>>> 10 <= name_length <= 15
+        put_success(f'your name contains 10-15 symbols {name_length}')
     elif name_length < 5:
         put_success(f'your name contains less than 5 symbols {name_length}')
     else:
         put_success(f'Name with length {name_length}')
 
-
-
-
-
-
+    weight = pw_input(label='Enter your weight', required=True, type=NUMBER, min=25, max=150, value=50)
+    weight2 = slider(label='Enter your weight in slider', required=True, type=FLOAT, min=25, max=150, value=50)
 
     logging.debug(f'given name: {given_name}')
 else:
@@ -72,9 +72,5 @@ else:
     # False                  True
     # False                  False
     put_text('Incorrect login or password')
-
-
-
-
 
 put_error('The end')
