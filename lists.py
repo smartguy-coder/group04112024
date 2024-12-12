@@ -42,3 +42,8 @@ crayons.pop(0)  # by index
 print(students)
 pass
 
+my_list = [9, 10, 6, 12]
+my_list.append(7)
+
+my_list.insert(255, 11)
+my_list[3] = 8
