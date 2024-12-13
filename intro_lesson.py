@@ -1,3 +1,5 @@
+import messages
+
 print('Some  їїїї  text')
 print("Some text   print    \'        ")
 print("Some text   print  \"  '        ")
