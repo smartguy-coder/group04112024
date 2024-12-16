@@ -1,30 +1,46 @@
-import decimal
-
-import money
-import phrases
-import constants
+import utils
 
 
-print(phrases.MSG_WELCOME.format(rest=constants.restaurant_name))
+def main():
+    dealership1_cars_number = 10
+    dealership2_cars_number = 30
 
-total_cost = 0
+    print(utils.has_permission_drive_car(1980))
+    print(utils.has_permission_drive_car(1990))
+    print(utils.has_permission_drive_car(2007))
 
-borsh_quantity = input(phrases.MSG_DISH_OFFER.format(dish='борщ', price=money.borsh_price))
-borsh_quantity = int(borsh_quantity)
-borsh_price = money.borsh_price * borsh_quantity
-# total_cost = total_cost + borsh_price
-total_cost += borsh_price
+    strings = utils.create_joined_string(data_list=[55555555555, 'kjjbh'], divider=', ')
+    strings = utils.create_joined_string(divider='==', data_list=['list 2', 'kjjbh', 5555555, 666666])
+    strings = utils.create_joined_string(['list 2', 'kjjbh', 5555555, 666666], divider='=+=', )
+    strings = utils.create_joined_string(['list 2', 'kjjbh', 5555555, 666666])
 
-cheese_quantity = input(phrases.MSG_DISH_OFFER.format(dish='синій сир', price=money.cheese_price))
-cheese_quantity = int(cheese_quantity)
-cheese_price = money.cheese_price * cheese_quantity
-total_cost = total_cost + cheese_price
+    print(strings)
 
-discount_sum = total_cost * constants.discount
-discount_sum = decimal.Decimal(str(discount_sum)).quantize(decimal.Decimal('0.01'))
 
-total_to_pay = total_cost - discount_sum
+    # site_data
+    total_cars = utils.get_cars_in_our_dealerships(dealership1_cars_number, dealership2_cars_number)
+    print(total_cars)
 
-print(phrases.MSG_TOTAL.format(total=total_cost))
-print(phrases.MSG_DISCOUNT.format(discount=discount_sum))
-print(phrases.MSG_TO_PAY.format(pay=total_to_pay))
+
+    # mobile-app
+    cars_number_from_mobile = [111, 5256]
+    total_cars_mobile = utils.get_cars_in_our_dealerships(cars_number_from_mobile[0], cars_number_from_mobile[1])
+    print(total_cars_mobile)
+
+
+    print(1111, 2222, 3333333, sep='+++', end='0')
+    print(4444, 5555, 6666666, sep='===')
+    print(77777, 5555, 6666666)
+
+    print(utils.get_multiplied_string('a'))
+    print(utils.get_multiplied_string('b'))
+    print(utils.get_multiplied_string('c'))
+    print(utils.get_multiplied_string('d'))
+    print(utils.get_multiplied_string('e'))
+    print(utils.get_multiplied_string('f'))
+    print(utils.get_multiplied_string('g'))
+    print(utils.get_multiplied_string('h', 3))
+    print(utils.get_multiplied_string('j', multiplicator=12))
+
+
+main()
