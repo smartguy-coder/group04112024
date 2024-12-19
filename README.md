@@ -11,3 +11,9 @@
 - Ctrl - D
 
 pip install pywebio
+
+pip install pytest
+
+- pytest .
+- pytest . -s
+- pytest . -s -v
