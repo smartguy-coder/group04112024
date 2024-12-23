@@ -55,3 +55,43 @@ def test_filter_strings_with_n_result():
     expected_result = ['n', 'N']
     actual_result = utils.filter_strings_with_n(list_strings)
     assert actual_result == expected_result
+
+
+def test_return_one_hundred():
+    expected_result = 100
+    actual_result = utils.return_max_discount()
+    assert actual_result == expected_result
+
+
+def test_get_vowels_from_text_empty_string():
+    text = ''
+    expected_result = ''
+    actual_result = utils.get_vowels_from_text(text)
+    assert actual_result == expected_result
+
+
+def test_get_vowels_from_text_no_param():
+    expected_result = ''
+    actual_result = utils.get_vowels_from_text()
+    assert actual_result == expected_result
+
+
+def test_get_vowels_from_text_case_1():
+    text = 'Alaska'
+    expected_result = 'aaa'
+    actual_result = utils.get_vowels_from_text(text)
+    assert actual_result == expected_result
+
+
+def test_get_vowels_from_text_case_2():
+    text = 'ffff'
+    expected_result = ''
+    actual_result = utils.get_vowels_from_text(text)
+    assert actual_result == expected_result
+
+
+def test_get_vowels_from_text_case_3():
+    text = 'ара'  # Cyrillic
+    expected_result = ''
+    actual_result = utils.get_vowels_from_text(text)
+    assert actual_result == expected_result, 'sanitize only English'
