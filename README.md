@@ -11,3 +11,4 @@
 - Ctrl - D
 
 pip install pywebio
+pip install requests
