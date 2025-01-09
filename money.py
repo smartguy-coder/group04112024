@@ -14,3 +14,9 @@ botsh_price_from_somewhere = 80
 borsh_price = decimal.Decimal(str(botsh_price_from_somewhere)).quantize(decimal.Decimal('0.01'))
 
 
+print(5555)
+print(5555)
+print(5555)
+print(5555)
+print(5555)
+print(5555)
