@@ -11,3 +11,6 @@
 - Ctrl - D
 
 pip install pywebio
+
+pip install python-dotenv
+pip install jinja2
