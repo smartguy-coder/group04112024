@@ -1,0 +1,33 @@
+function doGet(request) {
+
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getSheetByName('Form Responses 1');
+  var values = sheet.getDataRange().getValues();
+
+  var output = [];
+
+  for(var i = 1; i < values.length; i++){
+    var row = {};
+
+    row['productName'] = values[i][1];
+    row['price'] = values[i][2];
+    row['description'] = values[i][3];
+    row['imageURL'] = values[i][4];
+    row['onSale'] = values[i][6];
+
+    output.push(row);
+  }
+
+  return ContentService.createTextOutput(
+    JSON.stringify(
+      {
+        products: output,
+        count: output.length,
+        isFirstApp: true
+      }
+
+    )
+  ).setMimeType(ContentService.MimeType.JSON);
+
+
+}

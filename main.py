@@ -1,30 +1,67 @@
-import decimal
 
-import money
-import phrases
-import constants
+from pywebio import start_server
+from pywebio.input import input_group, input
+from pywebio.output import put_text, put_html, put_success, put_table, put_image, put_button, put_loading, put_column, \
+    clear, put_scope, use_scope
+from pywebio.session import run_js
+
+from google_api import get_olx_products
+from utils.email_sender import send_email
 
 
-print(phrases.MSG_WELCOME.format(rest=constants.restaurant_name))
+def handle_click(product_name: str):
+    put_success(f'Вибрано {product_name}')
 
-total_cost = 0
+    data = input_group(
+        'Введіть ваші дані',
+        [
+            input('Ваша електронна пошта', name='email'),
+            input('Вашу імя', name='name'),
+        ]
+    )
 
-borsh_quantity = input(phrases.MSG_DISH_OFFER.format(dish='борщ', price=money.borsh_price))
-borsh_quantity = int(borsh_quantity)
-borsh_price = money.borsh_price * borsh_quantity
-# total_cost = total_cost + borsh_price
-total_cost += borsh_price
+    put_success(f'Дякуємо, {data["name"]}')
+    send_email([data["email"]], mail_body=product_name, mail_subject='New order')
+    run_js('setTimeout( function(){location.reload();}, 2000             )')
 
-cheese_quantity = input(phrases.MSG_DISH_OFFER.format(dish='синій сир', price=money.cheese_price))
-cheese_quantity = int(cheese_quantity)
-cheese_price = money.cheese_price * cheese_quantity
-total_cost = total_cost + cheese_price
 
-discount_sum = total_cost * constants.discount
-discount_sum = decimal.Decimal(str(discount_sum)).quantize(decimal.Decimal('0.01'))
+def main():
+    put_html('<h1>Вітаємо вас на нашому сайті')
+    put_success('Товари в наявності')
 
-total_to_pay = total_cost - discount_sum
+    put_scope("my_area")
 
-print(phrases.MSG_TOTAL.format(total=total_cost))
-print(phrases.MSG_DISCOUNT.format(discount=discount_sum))
-print(phrases.MSG_TO_PAY.format(pay=total_to_pay))
+    with use_scope("my_area"):
+        put_loading(color='primary')
+        products = get_olx_products()
+
+    clear(scope="my_area")
+
+    table = []
+    table.append(['№', "Товар", "Ціна, грн", "Опис товару", "Зображення", "Замовити"])
+
+    for idx, product in enumerate(products, start=1):
+        product_list = []
+        product_list.append(idx)
+        product_list.append(product['productName'])
+        product_list.append(product['price'])
+        product_list.append(product['description'].replace('\t', '')[:81])
+
+        image_url = product['imageURL']
+        if image_url:
+            image_html = f'<img src="{image_url}" style="width:50px;">'
+            product_list.append(put_html(image_html))
+        else:
+            product_list.append('')
+
+        product_name = product['productName']
+        product_list.append(put_button('Купити', onclick=lambda name=product_name: handle_click(name)))
+
+        table.append(product_list)
+
+    put_table(table)
+
+
+
+if __name__ == '__main__':
+    start_server(main, port=8000, host='127.0.0.1')

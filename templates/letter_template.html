@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #FF8000
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>My name is <b>{{ name }}</b></h1>
+
+<h3>My hobbies</h3>
+{% for hobby in  hobbies %}
+    <p>- {{ hobby }}</p>
+{% endfor %}
+
+{% if age < 100 %}
+    <p>under 100</p>
+{% elif age == 100 %}
+    <p>I im 100 sharp</p>
+{% else %}
+    <p>older than 100 </p>
+{% endif %}
+
+
+</body>
+</html>
