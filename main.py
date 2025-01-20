@@ -1,7 +1,8 @@
 
 from pywebio import start_server
 from pywebio.input import input_group, input
-from pywebio.output import put_text, put_html, put_success, put_table, put_image, put_button
+from pywebio.output import put_text, put_html, put_success, put_table, put_image, put_button, put_loading, put_column, \
+    clear, put_scope, use_scope
 from pywebio.session import run_js
 
 from google_api import get_olx_products
@@ -28,7 +29,13 @@ def main():
     put_html('<h1>Вітаємо вас на нашому сайті')
     put_success('Товари в наявності')
 
-    products = get_olx_products()
+    put_scope("my_area")
+
+    with use_scope("my_area"):
+        put_loading(color='primary')
+        products = get_olx_products()
+
+    clear(scope="my_area")
 
     table = []
     table.append(['№', "Товар", "Ціна, грн", "Опис товару", "Зображення", "Замовити"])
@@ -47,11 +54,13 @@ def main():
         else:
             product_list.append('')
 
-        product_list.append(put_button('Купити', onclick=lambda: handle_click(product['productName'])))
+        product_name = product['productName']
+        product_list.append(put_button('Купити', onclick=lambda name=product_name: handle_click(name)))
 
         table.append(product_list)
 
     put_table(table)
+
 
 
 if __name__ == '__main__':
